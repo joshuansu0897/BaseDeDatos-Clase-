@@ -8,6 +8,8 @@ package tareauno;
 /**
  *
  * @author joshuansu
+ * Puede ignorar esta clase junto con la de TareaUno
+ * el importante es tareaSalon
  */
 public class DatosObj {
     private String nombre;

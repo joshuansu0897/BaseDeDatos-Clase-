@@ -16,8 +16,11 @@ import java.util.Scanner;
 /**
  *
  * @author joshuansu
+ * Esta es para un CSV gernearl, se ponen los campos que quieres y palabras claves a buscaer,
+ * tambien lo puede ignorar
+ * el importante es tareaSalon
  */
-public class TareaNormal {
+public class tareaSalonN {
 
     private static String RUTA = "./resources/hockey.csv";
     private static List<String> list;

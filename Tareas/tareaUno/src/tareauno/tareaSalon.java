@@ -11,6 +11,7 @@ import java.util.Scanner;
 /**
  *
  * @author joshuansu
+ * Esta cumple con lo que solicito exactamente
  */
 public class tareaSalon {
 

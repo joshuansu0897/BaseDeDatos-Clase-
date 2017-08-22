@@ -11,6 +11,13 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/**
+ * 
+ * @author joshuansu
+ * Puede ignorar esta clase junto con la de DatosObj
+ * el importante es tareaSalon
+ */
+
 public class TareaUno {
 
     private static List<DatosObj> list;

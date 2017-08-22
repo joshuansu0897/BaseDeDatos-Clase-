@@ -8,6 +8,8 @@ package tareauno;
 /**
  *
  * @author joshuansu
+ * esta clase sirve para correr tareaSalon, que es la manera que lo pidio exactamente
+ * el importante es tareaSalon
  */
 public class hockeyDatos {
 
