@@ -20,7 +20,7 @@ public class tareaSalon {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        System.out.println("Busca en 'LastName' y 'FirstName'");
+        System.out.println("Busca en el CSV");
         System.out.print("Palabra a buscar: ");
         String palabra = sc.nextLine();
         leer(RUTA, palabra);
