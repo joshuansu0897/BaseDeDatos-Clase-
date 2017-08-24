@@ -38,9 +38,11 @@ public class TareaTres {
                 String line = br.readLine();
                 list = new HashMap<>();
                 while ((line = br.readLine()) != null) {
-
+                    
                     String[] datos = line.split(",");
-
+                    if(datos[15].contains("/")){
+                        continue;
+                    }
                     if (!list.containsKey(datos[15])) {
                         list.put(datos[15], datos[0]);
                     } else {
