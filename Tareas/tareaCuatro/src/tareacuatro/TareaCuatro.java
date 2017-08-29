@@ -36,17 +36,25 @@ public class TareaCuatro {
         System.out.println("");
 
         PlayersRandomFile prf = new PlayersRandomFile(PATH, nombre);
-        
+
         System.out.println("Guardando...");
         prf.Write(list);
         System.out.println("");
-        System.out.println("Leyendo archivo .dat ...");
-
-        List<Players> list2 = new ArrayList<>();
-
-        for (int i = 0; i < list.size(); i++) {
-            list2.add(prf.Read(i * B));
-        }
+        do {
+            System.out.print("Que 'Player' quieres: ");
+            int n = sc.nextInt();
+            System.out.println("Leyendo archivo .dat ...");
+            Long ti = System.currentTimeMillis();
+            prf.Read(B * n);
+            System.out.println("Tiempo Tardado: " + (System.currentTimeMillis() - ti) + " milisegundos");
+            System.out.println("");
+        } while (true);
+//
+//        List<Players> list2 = new ArrayList<>();
+//
+//        for (int i = 0; i < list.size(); i++) {
+//            list2.add(prf.Read(i * B));
+//        }
 
     }
 
