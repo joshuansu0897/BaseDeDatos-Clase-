@@ -165,7 +165,7 @@ public class Players {
         this.GP = GP;
     }
 
-    private static String limitante(String s, int n) {
+    private String limitante(String s, int n) {
 
         if (s.length() > n) {
             throw new RuntimeException("Error el dato:"+s+" es demaciado grande, su tamaño es:"+s.length()+" el limite es:"+n);
