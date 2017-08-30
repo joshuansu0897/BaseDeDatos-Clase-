@@ -8,6 +8,7 @@ package tareacuatro;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -18,6 +19,7 @@ public class PlayersRandomFile {
 
     private final String PATH;
     private final String FILE_NAME;
+    private HashMap<String, Long> indexTable;
 
     public PlayersRandomFile(String PATH, String FILE_NAME) {
         this.PATH = PATH;
@@ -35,9 +37,11 @@ public class PlayersRandomFile {
             }
 
             RandomAccessFile out = new RandomAccessFile(PATH + FILE_NAME, "rw");
-            for (Players p : list) {
+            indexTable = new HashMap<>();
+            for (int i = 0; i < list.size(); i++) {
                 escribeEn = out.length();
                 out.seek(escribeEn);
+                Players p = list.get(i);
                 out.writeInt(p.getSalary());
                 out.writeBytes(p.getBorn());
                 out.writeBytes(p.getCity());
@@ -55,6 +59,8 @@ public class PlayersRandomFile {
                 out.writeBytes(p.getPosition());
                 out.writeBytes(p.getTeam());
                 out.writeShort(p.getGP());
+
+                indexTable.put((p.getFirstName().trim().toLowerCase() + p.getLastName().trim().toLowerCase()), new Long(i));
             }
             out.close();
 
@@ -64,8 +70,15 @@ public class PlayersRandomFile {
         return escribeEn;
     }
 
+    public Players Read(String firstName, String lastName) {
+        return Read(indexTable.get(firstName.trim().toLowerCase() + lastName.trim().toLowerCase()));
+    }
+
     public Players Read(Long position) {
         try {
+            if (position == null) {
+                throw new RuntimeException("**** First Name or Last Name is wrong ****");
+            }
             RandomAccessFile out = new RandomAccessFile(PATH + FILE_NAME, "rw");
             Players p = new Players();
 
@@ -101,11 +114,13 @@ public class PlayersRandomFile {
 
             byte[] lname = new byte[30];
             out.read(lname);
-            p.setLastName(new String(lname));
+            String LastN = new String(lname);
+            p.setLastName(LastN);
 
             byte[] fname = new byte[30];
             out.read(fname);
-            p.setFirstName(new String(fname));
+            String FirstN = new String(fname);
+            p.setFirstName(FirstN);
 
             byte[] pos = new byte[10];
             out.read(pos);
