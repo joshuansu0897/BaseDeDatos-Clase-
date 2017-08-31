@@ -21,6 +21,11 @@ public class PlayersRandomFile {
     private final String FILE_NAME;
     private HashMap<String, Long> indexTable;
 
+    //Colores en ansi, creo que solo soporta desde 30 hasta 37 (creo)
+    public static final String ANSI_RESET = "\033[0m";
+    public static final String ANSI_RED = "\033[31m";
+    public static final String ANSI_LIGHT_BLUE = "\033[34m";
+
     public PlayersRandomFile(String PATH, String FILE_NAME) {
         this.PATH = PATH;
         this.FILE_NAME = FILE_NAME;
@@ -77,7 +82,11 @@ public class PlayersRandomFile {
     public Players Read(Long position) {
         try {
             if (position == null) {
-                throw new RuntimeException("**** First Name or Last Name is wrong ****");
+                System.out.println("");
+                System.out.println("Hola, la " + ANSI_LIGHT_BLUE + "Posicion " + ANSI_RESET + "llega como " + ANSI_RED + "Nullo " + ANSI_RESET + "...");
+                System.out.println("Es posible que " + ANSI_LIGHT_BLUE + "First Name " + ANSI_RESET + "o " + ANSI_LIGHT_BLUE + "Last Name " + ANSI_RESET + "Sean Datos " + ANSI_RED + "ERRONEOS." + ANSI_RESET);
+                System.out.println("");
+                return null;
             }
             RandomAccessFile out = new RandomAccessFile(PATH + FILE_NAME, "rw");
             Players p = new Players();
