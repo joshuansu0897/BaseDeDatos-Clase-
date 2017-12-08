@@ -7,11 +7,13 @@ package com.mycompany.mavenproject2;
 
 import com.mycompany.mavenproject2.database.ArtistBD;
 import com.mycompany.mavenproject2.views.artist.ArtistasMenu;
+import com.mycompany.mavenproject2.views.cd.CDMenu;
 import com.mycompany.mavenproject2.views.cdset.CDSetMenu;
 import com.mycompany.mavenproject2.views.recordcompany.RecordCompanyMenu;
 import com.mycompany.mavenproject2.views.musicgenre.MusicGenreMenu;
 import com.mycompany.mavenproject2.views.tiendas.TiendasMenu;
 import com.mycompany.mavenproject2.views.track.TrackMenu;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
@@ -257,7 +259,10 @@ public final class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-//cd // TODO add your handling code here:
+        CDMenu mg = new CDMenu(this, true);
+        mg.setLocationRelativeTo(null);
+        mg.setVisible(true);
+        llenarTabla();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -279,10 +284,9 @@ public final class Menu extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             new Menu().setVisible(true);
         });
-                
+
         //version dos
         //java.awt.EventQueue.invokeLater(new RunnableImpl());
-
         //original
         /*java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
