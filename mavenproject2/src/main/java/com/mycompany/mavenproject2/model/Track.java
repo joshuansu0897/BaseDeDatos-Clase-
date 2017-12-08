@@ -15,8 +15,17 @@ public class Track {
     private String title;
     private String length;
     private String comment;
+    private long idCD = -1;
 
     public Track() {
+    }
+
+    public long getIdCD() {
+        return idCD;
+    }
+
+    public void setIdCD(long idCD) {
+        this.idCD = idCD;
     }
 
     public long getId() {

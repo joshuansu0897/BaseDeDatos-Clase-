@@ -48,7 +48,7 @@ public class TrackBD extends BD {
 
     public List<Track> getTracks() throws SQLException {
         List<Track> l = new ArrayList<>();
-        String query = "SELECT id, title, length, comment\n"
+        String query = "SELECT id, title, length, comment, \"idCD\"\n"
                 + "	FROM public.\"CD_Track\";";
         try (Connection cn = getConnection(); PreparedStatement stm = cn.prepareStatement(query)) {
             try (ResultSet rsSer = stm.executeQuery()) {
@@ -58,6 +58,7 @@ public class TrackBD extends BD {
                     t.setTitle(rsSer.getString("title"));
                     t.setLength(rsSer.getString("length"));
                     t.setComment(rsSer.getString("comment"));
+                    t.setIdCD(rsSer.getLong("idCD"));
                     l.add(t);
                 }
             }
@@ -67,7 +68,7 @@ public class TrackBD extends BD {
 
     public Track getTrackId(long id) throws SQLException {
         Track t = null;
-        String query = "SELECT title, length, comment\n"
+        String query = "SELECT title, length, comment, \"idCD\"\n"
                 + "	FROM public.\"CD_Track\" where id = ?";
         try (Connection cn = getConnection(); PreparedStatement stm = cn.prepareStatement(query)) {
             stm.setLong(1, id);
@@ -78,6 +79,7 @@ public class TrackBD extends BD {
                     t.setTitle(rsSer.getString("title"));
                     t.setLength(rsSer.getString("length"));
                     t.setComment(rsSer.getString("comment"));
+                    t.setIdCD(rsSer.getLong("idCD"));
                 }
             }
         }
@@ -92,21 +94,23 @@ public class TrackBD extends BD {
             PreparedStatement stm;
             if (nueva) {
                 query = "INSERT INTO public.\"CD_Track\"(\n"
-                        + "	title, length, comment)\n"
-                        + "	VALUES (?, ?, ?);";
+                        + "	title, length, comment, \"idCD\")\n"
+                        + "	VALUES (?, ?, ?, ?);";
                 stm = con.prepareStatement(query);
                 stm.setString(1, t.getTitle());
                 stm.setString(2, t.getLength());
                 stm.setString(3, t.getComment());
+                stm.setLong(4, t.getIdCD());
             } else {
                 query = "UPDATE public.\"CD_Track\"\n"
-                        + "	SET title=?, length=?, comment=?\n"
+                        + "	SET title=?, length=?, comment=?, \"idCD\"=?\n"
                         + "	WHERE id=?;";
                 stm = con.prepareStatement(query);
                 stm.setString(1, t.getTitle());
                 stm.setString(2, t.getLength());
                 stm.setString(3, t.getComment());
-                stm.setLong(4, t.getId());
+                stm.setLong(4, t.getIdCD());
+                stm.setLong(5, t.getId());
             }
             stm.executeUpdate();
             stm.close();

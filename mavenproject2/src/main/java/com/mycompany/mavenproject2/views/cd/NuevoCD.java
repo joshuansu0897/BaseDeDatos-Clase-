@@ -5,11 +5,13 @@
  */
 package com.mycompany.mavenproject2.views.cd;
 
+import com.mycompany.mavenproject2.database.ArtistBD;
 import com.mycompany.mavenproject2.database.CDBD;
 import com.mycompany.mavenproject2.database.CDSetBD;
 import com.mycompany.mavenproject2.database.MusicGenreBD;
 import com.mycompany.mavenproject2.database.RecordCompanyBD;
 import com.mycompany.mavenproject2.database.RefCDOutletBD;
+import com.mycompany.mavenproject2.model.Artist;
 import com.mycompany.mavenproject2.model.CD;
 import com.mycompany.mavenproject2.model.CDSet;
 import com.mycompany.mavenproject2.model.MusicGenre;
@@ -24,12 +26,13 @@ import javax.swing.JOptionPane;
  * @author joshuansu
  */
 public class NuevoCD extends javax.swing.JDialog {
-
+    
     private final CD MG;
     private List<RecordCompany> listR;
     private List<CDSet> listC;
     private List<MusicGenre> listM;
     private List<RefCDOutlet> listO;
+    private List<Artist> listA;
 
     /**
      * Creates new form NuevoArtista
@@ -46,6 +49,7 @@ public class NuevoCD extends javax.swing.JDialog {
             listC = CDSetBD.getInstance().getAllCDSet();
             listM = MusicGenreBD.getInstance().getAllMusiGenre();
             listO = RefCDOutletBD.getInstance().getAllCDOutlet();
+            listA = ArtistBD.getInstance().getArtist();
             llenarCombo();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -67,6 +71,7 @@ public class NuevoCD extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel11 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -92,6 +97,10 @@ public class NuevoCD extends javax.swing.JDialog {
         outlet = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         set = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
+        artista = new javax.swing.JComboBox<>();
+
+        jLabel11.setText("jLabel11");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -142,6 +151,8 @@ public class NuevoCD extends javax.swing.JDialog {
         jLabel9.setText("Disponible en");
 
         jLabel10.setText("Set CD");
+
+        jLabel12.setText("Artista");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -197,7 +208,11 @@ public class NuevoCD extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(set, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(set, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(artista, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -234,7 +249,9 @@ public class NuevoCD extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(set, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(set, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12)
+                    .addComponent(artista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(companyCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -286,6 +303,7 @@ public class NuevoCD extends javax.swing.JDialog {
     }//GEN-LAST:event_precioActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> artista;
     private javax.swing.JTextField cantidadCanciones;
     private javax.swing.JComboBox<String> companyCode;
     private org.jdesktop.swingx.JXDatePicker fechaP;
@@ -293,6 +311,8 @@ public class NuevoCD extends javax.swing.JDialog {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -319,24 +339,28 @@ public class NuevoCD extends javax.swing.JDialog {
         if (MG.getRecordCompanyCode() != null && !MG.getRecordCompanyCode().trim().equals("")) {
             companyCode.setSelectedItem(getNameCompany(MG.getRecordCompanyCode()));
         }
-
+        
         if (MG.getOutletCode() != null && !MG.getOutletCode().trim().equals("")) {
             outlet.setSelectedItem(MG.getOutletCode());
         }
-
+        
         if (MG.getMusicGenreCode() != null && !MG.getMusicGenreCode().trim().equals("")) {
             generoMusical.setSelectedItem(MG.getMusicGenreCode());
         }
-
+        
         if (MG.getCDSetid() != -1) {
             set.setSelectedItem(getNameSet(MG.getCDSetid()));
+        }
+        
+        if (MG.getIdArtist() != -1) {
+            artista.setSelectedItem(getNameArtista(MG.getIdArtist()));
         }
         precio.setText(MG.getCost());
         fechaP.setDate(Util.getDateFromLocalDate(MG.getDateReleased()));
         cantidadCanciones.setText(MG.getNumberOfTracks() + "");
         varios.setSelected(MG.isVariousArtists());
     }
-
+    
     private void guardar() {
         if (!nombre.getText().trim().equals("")) {
             MG.setTitle(nombre.getText().trim());
@@ -344,36 +368,37 @@ public class NuevoCD extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Titulo incompleto");
             return;
         }
-
+        
         if (Util.isInt(numeros.getText().trim())) {
             MG.setTotalPlayingTimes(Integer.valueOf(numeros.getText().trim()));
         } else {
             JOptionPane.showMessageDialog(this, "Error en cantidad, numero entero porfavor");
             return;
         }
-
+        
         if (Util.isNumber(precio.getText().trim())) {
             MG.setCost(precio.getText().trim());
         }
-
+        
         if (Util.isInt(cantidadCanciones.getText().trim())) {
             MG.setNumberOfTracks(Integer.valueOf(numeros.getText().trim()));
         } else {
             JOptionPane.showMessageDialog(this, "Error en cantidad, numero entero porfavor");
             return;
         }
-
+        
         if (fechaP.getDate() != null) {
             MG.setDateReleased(Util.getLocalDateFromDate(fechaP.getDate()));
         }
-
+        
         MG.setVariousArtists(varios.isSelected());
-
+        
         MG.setRecordCompanyCode(getCodeCompany(companyCode.getSelectedItem().toString()));
         MG.setOutletCode(outlet.getSelectedItem().toString());
         MG.setMusicGenreCode(generoMusical.getSelectedItem().toString());
         MG.setCDSetid(getIDSet(set.getSelectedItem().toString()));
-
+        MG.setIdArtist(getIDArtista(artista.getSelectedItem().toString()));
+        
         try {
             CDBD.getInstance().saveCD(MG);
             dispose();
@@ -381,55 +406,73 @@ public class NuevoCD extends javax.swing.JDialog {
             ex.printStackTrace();
         }
     }
-
+    
     private void llenarCombo() {
         companyCode.removeAll();
         listR.forEach(c -> {
             companyCode.addItem(c.getName());
         });
-
+        
         outlet.removeAll();
         listO.forEach(c -> {
             outlet.addItem(c.getCode());
         });
-
+        
         generoMusical.removeAll();
         listM.forEach(c -> {
             generoMusical.addItem(c.getCode());
         });
-
+        
         set.removeAll();
         listC.forEach(c -> {
             set.addItem(c.getName());
         });
+        
+        artista.removeAll();
+        listA.forEach(c -> {
+            artista.addItem(c.getName());
+        });
     }
-
+    
     private String getCodeCompany(String name) {
         return listR.stream().filter(c -> c.getName().equals(name))
                 .findFirst()
                 .get()
                 .getCode();
     }
-
+    
     private String getNameCompany(String code) {
         return listR.stream().filter(c -> c.getCode().equals(code))
                 .findFirst()
                 .get()
                 .getName();
     }
-
+    
     private long getIDSet(String name) {
         return listC.stream().filter(c -> c.getName().equals(name))
                 .findFirst()
                 .get()
                 .getId();
     }
-
+    
     private String getNameSet(long id) {
         return listC.stream().filter(c -> c.getId() == id)
                 .findFirst()
                 .get()
                 .getName();
     }
-
+    
+    private long getIDArtista(String name) {
+        return listA.stream().filter(c -> c.getName().equals(name))
+                .findFirst()
+                .get()
+                .getId();
+    }
+    
+    private String getNameArtista(long id) {
+        return listA.stream().filter(c -> c.getId() == id)
+                .findFirst()
+                .get()
+                .getName();
+    }
 }

@@ -13,19 +13,28 @@ import java.time.LocalDate;
  */
 public class CD {
 
-    long id = -1;
-    String musicGenreCode;
-    String outletCode;
-    long CDSetid = -1;
-    String title;
-    String cost;
-    LocalDate dateReleased;
-    int numberOfTracks;
-    int totalPlayingTimes;
-    boolean variousArtists;
-    String recordCompanyCode;
+    private long id = -1;
+    private String musicGenreCode;
+    private String outletCode;
+    private long CDSetid = -1;
+    private String title;
+    private String cost;
+    private LocalDate dateReleased;
+    private int numberOfTracks;
+    private int totalPlayingTimes;
+    private boolean variousArtists;
+    private String recordCompanyCode;
+    private long idArtist = -1;
 
     public CD() {
+    }
+
+    public long getIdArtist() {
+        return idArtist;
+    }
+
+    public void setIdArtist(long idArtist) {
+        this.idArtist = idArtist;
     }
 
     public long getId() {

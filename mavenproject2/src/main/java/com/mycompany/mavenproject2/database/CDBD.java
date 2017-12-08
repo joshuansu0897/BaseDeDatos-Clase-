@@ -50,6 +50,9 @@ public class CDBD extends BD {
     }
 
     public void deleteCD(long id) throws Exception {
+        List<Long> tracksID = new ArrayList<>();
+        tracksID.addAll(ArtOnTraOnCD.getInstance().getTrackCD(id));
+        TrackBD.getInstance().deleteTracks(tracksID);
         String query = "DELETE FROM public.\"CD\" WHERE id = ? ";
         try (Connection conSer = getConnection(); PreparedStatement stmSer = conSer.prepareStatement(query)) {
             stmSer.setLong(1, id);
@@ -84,7 +87,8 @@ public class CDBD extends BD {
                 + "\"numberOfTracks\", \n"
                 + "\"totalPlayingTimes\", \n"
                 + "\"variousArtists\", \n"
-                + "\"recordCompanyCode\"\n"
+                + "\"recordCompanyCode\",\n"
+                + "\"idArtist\" \n"
                 + "	FROM public.\"CD\" WHERE id=?";
         try (Connection con = getConnection(); PreparedStatement stm = con.prepareStatement(query)) {
             stm.setLong(1, id);
@@ -101,6 +105,7 @@ public class CDBD extends BD {
                     cd.setTotalPlayingTimes(rs.getInt("totalPlayingTimes"));
                     cd.setVariousArtists(rs.getBoolean("variousArtists"));
                     cd.setRecordCompanyCode(rs.getString("recordCompanyCode"));
+                    cd.setIdArtist(rs.getLong("idArtist"));
                     cd.setId(id);
                 }
             }
@@ -120,7 +125,8 @@ public class CDBD extends BD {
                 + "\"numberOfTracks\", \n"
                 + "\"totalPlayingTimes\", \n"
                 + "\"variousArtists\", \n"
-                + "\"recordCompanyCode\"\n"
+                + "\"recordCompanyCode\", \n"
+                + "\"idArtist\" \n"
                 + "	FROM public.\"CD\"";
         try (Connection con = getConnection(); PreparedStatement stm = con.prepareStatement(query)) {
             try (ResultSet rs = stm.executeQuery()) {
@@ -137,6 +143,7 @@ public class CDBD extends BD {
                     cd.setTotalPlayingTimes(rs.getInt("totalPlayingTimes"));
                     cd.setVariousArtists(rs.getBoolean("variousArtists"));
                     cd.setRecordCompanyCode(rs.getString("recordCompanyCode"));
+                    cd.setIdArtist(rs.getLong("idArtist"));
                     l.add(cd);
                 }
             }
@@ -161,9 +168,10 @@ public class CDBD extends BD {
                         + "    \"numberOfTracks\",\n"
                         + "    \"totalPlayingTimes\",\n"
                         + "    \"variousArtists\",\n"
-                        + "    \"recordCompanyCode\"\n"
+                        + "    \"recordCompanyCode\", \n"
+                        + "     \"idArtist\" \n"
                         + ")\n"
-                        + "	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                        + "	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
                 stm = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                 stm.setString(1, cd.getMusicGenreCode());
                 stm.setString(2, cd.getOutletCode());
@@ -175,6 +183,7 @@ public class CDBD extends BD {
                 stm.setInt(8, cd.getTotalPlayingTimes());
                 stm.setBoolean(9, cd.isVariousArtists());
                 stm.setString(10, cd.getRecordCompanyCode());
+                stm.setLong(11, cd.getIdArtist());
             } else {
                 query = "UPDATE public.\"CD\"\n"
                         + "	SET \"musicGenreCode\"=?,\n"
@@ -186,7 +195,8 @@ public class CDBD extends BD {
                         + "    \"numberOfTracks\"=?,\n"
                         + "    \"totalPlayingTimes\"=?,\n"
                         + "    \"variousArtists\"=?,\n"
-                        + "    \"recordCompanyCode\"=?\n"
+                        + "    \"recordCompanyCode\"=?, \n"
+                        + "     \"idArtist\"=? \n"
                         + "	WHERE id=?;";
                 stm = con.prepareStatement(query);
                 stm.setString(1, cd.getMusicGenreCode());
@@ -199,7 +209,8 @@ public class CDBD extends BD {
                 stm.setInt(8, cd.getTotalPlayingTimes());
                 stm.setBoolean(9, cd.isVariousArtists());
                 stm.setString(10, cd.getRecordCompanyCode());
-                stm.setLong(11, cd.getId());
+                stm.setLong(11, cd.getIdArtist());
+                stm.setLong(12, cd.getId());
             }
             stm.executeUpdate();
             stm.close();

@@ -5,8 +5,12 @@
  */
 package com.mycompany.mavenproject2.views.track;
 
+import com.mycompany.mavenproject2.database.CDBD;
 import com.mycompany.mavenproject2.database.TrackBD;
 import com.mycompany.mavenproject2.model.Track;
+import com.mycompany.mavenproject2.model.CD;
+import java.sql.SQLException;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,6 +20,7 @@ import javax.swing.JOptionPane;
 public class NuevoTrack extends javax.swing.JDialog {
 
     final Track T;
+    private List<CD> listCD;
 
     /**
      * Creates new form NuevoTracka
@@ -27,6 +32,12 @@ public class NuevoTrack extends javax.swing.JDialog {
     public NuevoTrack(java.awt.Dialog parent, boolean modal, Track t) {
         super(parent, modal);
         initComponents();
+        try {
+            listCD = CDBD.getInstance().getAllCDs();
+            llenarCombo();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         if (t == null) {
             T = new Track();
         } else {
@@ -56,6 +67,8 @@ public class NuevoTrack extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         comentarios = new javax.swing.JTextArea();
         jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        cd = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -87,6 +100,8 @@ public class NuevoTrack extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setText("CD");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -107,13 +122,16 @@ public class NuevoTrack extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(save))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(144, 144, 144)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cd, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -126,14 +144,16 @@ public class NuevoTrack extends javax.swing.JDialog {
                     .addComponent(jLabel9)
                     .addComponent(duracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel1)
+                    .addComponent(cd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(save)
-                    .addComponent(jButton2))
-                .addGap(5, 5, 5))
+                    .addComponent(jButton2)
+                    .addComponent(save)))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -146,7 +166,7 @@ public class NuevoTrack extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE))
+                .addGap(0, 13, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -159,7 +179,7 @@ public class NuevoTrack extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
         );
 
         pack();
@@ -174,9 +194,11 @@ public class NuevoTrack extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cd;
     private javax.swing.JTextArea comentarios;
     private javax.swing.JTextField duracion;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
@@ -192,6 +214,9 @@ public class NuevoTrack extends javax.swing.JDialog {
         titulo.setText(T.getTitle());
         duracion.setText(T.getLength());
         comentarios.setText(T.getComment());
+        if (T.getIdCD() != -1) {
+            cd.setSelectedItem(getTitleCD(T.getIdCD()));
+        }
     }
 
     private void guardar() {
@@ -207,6 +232,7 @@ public class NuevoTrack extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Incluya la duracion de la cancion profavor");
             return;
         }
+        T.setIdCD(getIDCD(cd.getSelectedItem().toString()));
 
         if (!comentarios.getText().trim().equals("")) {
             T.setComment(comentarios.getText().trim());
@@ -217,5 +243,26 @@ public class NuevoTrack extends javax.swing.JDialog {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void llenarCombo() {
+        cd.removeAll();
+        listCD.forEach(c -> {
+            cd.addItem(c.getTitle());
+        });
+    }
+
+    private long getIDCD(String name) {
+        return listCD.stream().filter(c -> c.getTitle().equals(name))
+                .findFirst()
+                .get()
+                .getId();
+    }
+
+    private String getTitleCD(long id) {
+        return listCD.stream().filter(c -> c.getId() == id)
+                .findFirst()
+                .get()
+                .getTitle();
     }
 }
